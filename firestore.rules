@@ -1,0 +1,10 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      // In a real app we'd want to restrict this, but for now we'll allow all since the admin panel doesn't enforce strict roles
+      allow read, write: if true;
+    }
+  }
+}
