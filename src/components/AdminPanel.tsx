@@ -24,7 +24,6 @@ import {
   BarChart3
 } from 'lucide-react';
 import { LeadItem, LeadStatus, SectorId, CompanySettings, SectorInfo } from '../types';
-import { GoogleFormsManager } from './GoogleFormsManager';
 import { EmailTemplatesManager } from './EmailTemplatesManager';
 import { DashboardMetrics } from './DashboardMetrics';
 
@@ -58,7 +57,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [pinInput, setPinInput] = useState<string>('');
   const [pinError, setPinError] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'leads' | 'settings' | 'novo_lead' | 'forms' | 'emails'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'leads' | 'settings' | 'novo_lead' | 'emails'>('dashboard');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('todos');
   const [sectorFilter, setSectorFilter] = useState<string>('todos');
@@ -302,17 +301,6 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 >
                   <Sliders className="w-3.5 h-3.5" />
                   Dados de Contato & SLA
-                </button>
-                <button
-                  onClick={() => setActiveTab('forms')}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
-                    activeTab === 'forms'
-                      ? 'bg-[#00A3FF] text-white glow-accent'
-                      : 'text-slate-400 hover:bg-white/5 hover:text-white'
-                  }`}
-                >
-                  <Link2 className="w-3.5 h-3.5" />
-                  Google Forms
                 </button>
                 <button
                   onClick={() => setActiveTab('emails')}
@@ -780,17 +768,6 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     Salvar Dados Institucionais
                   </button>
                 </form>
-              </div>
-            )}
-
-            {/* Tab 4: Google Forms Integration */}
-            {activeTab === 'forms' && (
-              <div className="flex-1 overflow-y-auto p-6 max-w-4xl mx-auto w-full">
-                <GoogleFormsManager
-                  onAddLeads={(newLeads) => {
-                    newLeads.forEach(lead => onAddLead(lead));
-                  }}
-                />
               </div>
             )}
 

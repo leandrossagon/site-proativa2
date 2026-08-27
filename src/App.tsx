@@ -14,16 +14,6 @@ import {
   INITIAL_LEADS 
 } from './data/sectorsData';
 import { LeadItem, LeadStatus, SectorId, CompanySettings } from './types';
-import { 
-  subscribeToLeads, 
-  subscribeToSettings, 
-  addLeadToFirebase, 
-  updateLeadStatusInFirebase, 
-  updateLeadNotesInFirebase, 
-  deleteLeadFromFirebase,
-  updateSettingsInFirebase,
-  resetFirebaseDemoData
-} from './lib/db';
 
 export default function App() {
   const [leads, setLeads] = useState<LeadItem[]>(INITIAL_LEADS);
@@ -32,19 +22,6 @@ export default function App() {
   const [preselectedSector, setPreselectedSector] = useState<SectorId>('automacoes');
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isCalculatorOpen, setIsCalculatorOpen] = useState(false);
-
-  useEffect(() => {
-    const unsubLeads = subscribeToLeads((data) => {
-      // If db is totally empty, we could populate INITIAL_LEADS, but resetFirebaseDemoData does this.
-      setLeads(data);
-    });
-    const unsubSettings = subscribeToSettings((data) => setSettings(data));
-
-    return () => {
-      unsubLeads();
-      unsubSettings();
-    };
-  }, []);
 
   // URL Hash handling for /admin or #admin
   useEffect(() => {
@@ -86,32 +63,34 @@ export default function App() {
   };
 
   const handleAddLead = async (leadData: Omit<LeadItem, 'id' | 'createdAt' | 'status'>) => {
-    const newLead = {
+    const newLead: LeadItem = {
+      id: Date.now().toString(),
       createdAt: new Date().toISOString(),
       status: 'novo' as LeadStatus,
       ...leadData
     };
-    await addLeadToFirebase(newLead);
+    setLeads(prev => [newLead, ...prev]);
   };
 
   const handleUpdateLeadStatus = async (id: string, newStatus: LeadStatus) => {
-    await updateLeadStatusInFirebase(id, newStatus);
+    setLeads(prev => prev.map(lead => lead.id === id ? { ...lead, status: newStatus } : lead));
   };
 
   const handleUpdateLeadNotes = async (id: string, notes: string) => {
-    await updateLeadNotesInFirebase(id, notes);
+    setLeads(prev => prev.map(lead => lead.id === id ? { ...lead, notes } : lead));
   };
 
   const handleDeleteLead = async (id: string) => {
-    await deleteLeadFromFirebase(id);
+    setLeads(prev => prev.filter(lead => lead.id !== id));
   };
 
   const handleResetDemoData = async () => {
-    await resetFirebaseDemoData();
+    setLeads(INITIAL_LEADS);
+    setSettings(INITIAL_COMPANY_SETTINGS);
   };
 
   const handleUpdateSettings = async (newSettings: CompanySettings) => {
-    await updateSettingsInFirebase(newSettings);
+    setSettings(newSettings);
   };
 
   const handleApplyEstimateToQuote = (data: {
