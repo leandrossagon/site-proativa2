@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
+import { LeadCaptureForm } from "./components/LeadCaptureForm";
 import { SectorGrid } from './components/SectorGrid';
 import { SectorDetails } from './components/SectorDetails';
 import { CaseStudiesSection } from './components/CaseStudiesSection';
@@ -122,18 +123,21 @@ export default function App() {
           onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
 
-        {/* Hero Section with Fast Lead Capture Form */}
-        <HeroSection
-          settings={settings}
-          preselectedSector={preselectedSector}
-          onSubmitLead={handleAddLead}
-          onOpenCalculator={() => setIsCalculatorOpen(true)}
-        />
+        {/* Hero Section */}
+        <HeroSection settings={settings} />
 
         {/* Sector Navigation Grid (7 specialized solutions) */}
         <SectorGrid
           sectors={SECTORS_DATA}
           onSelectSector={handleSelectSector}
+        />
+
+        {/* Lead Capture Form moved below SectorGrid */}
+        <LeadCaptureForm
+          settings={settings}
+          preselectedSector={preselectedSector}
+          onSubmitLead={handleAddLead}
+          onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
 
         {/* Detailed Technical Routes and Conversion Copy */}

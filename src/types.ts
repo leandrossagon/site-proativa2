@@ -30,12 +30,16 @@ export type LeadStatus = 'novo' | 'em_analise' | 'orcamento_enviado' | 'fechado'
 
 export interface LeadItem {
   id: string;
+  perfil?: 'b2b' | 'b2c';
   nome: string;
+  empresa?: string;
   whatsapp: string;
   email?: string;
-  setor: SectorId;
+  setor: SectorId | string;
   detalhes: string;
-  porteProjeto?: 'pequeno' | 'medio' | 'grande' | 'corporativo';
+  porteProjeto?: 'pequeno' | 'medio' | 'grande' | 'corporativo' | string;
+  tipoImovel?: string;
+  necessidadeB2C?: string;
   createdAt: string;
   status: LeadStatus;
   notes?: string;
