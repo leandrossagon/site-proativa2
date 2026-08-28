@@ -83,12 +83,12 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
         {/* Brand Logo */}
         <a href="#" className="flex items-baseline gap-2 group focus:outline-none">
-          <div className="flex items-baseline">
+          <div className="flex flex-col sm:flex-row sm:items-baseline">
             <span className="text-2xl sm:text-3xl font-black tracking-tighter text-white">
-              PROATIVA<span className="text-[#00A3FF]">_</span>
+              PROATIVA
             </span>
-            <span className="hidden sm:inline-block ml-2 text-[9px] uppercase tracking-[0.25em] text-slate-400 font-bold border-l border-white/20 pl-2">
-              Engenharia de Sistemas
+            <span className="mt-0.5 sm:mt-0 sm:ml-2 text-[8px] sm:text-[10px] uppercase tracking-widest text-[#00A3FF] font-bold sm:border-l sm:border-white/20 sm:pl-2">
+              Soluções em Tecnologia e Automações
             </span>
           </div>
         </a>

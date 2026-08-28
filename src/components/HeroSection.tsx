@@ -110,6 +110,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Main Hero Header */}
         <div className="text-center max-w-4xl mx-auto mb-12">
+          <div className="flex justify-center mb-8 relative">
+            <div className="absolute inset-0 bg-white/20 blur-[60px] rounded-full w-3/4 h-3/4 mx-auto top-1/2 -translate-y-1/2"></div>
+            <img 
+              src="/logo1.png" 
+              alt="PROATIVA Tecnologies" 
+              className="relative z-10 h-64 sm:h-[400px] object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.6)]" 
+            />
+          </div>
+
           <div className="inline-flex items-center gap-2 mb-4">
             <span className="w-8 h-[1px] bg-[#FF6B00]"></span>
             <span className="text-[#FF6B00] text-[10px] sm:text-xs uppercase tracking-[0.35em] font-black">
@@ -118,12 +127,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <span className="w-8 h-[1px] bg-[#FF6B00]"></span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.05] text-white mb-5 uppercase">
+          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter leading-[1.05] text-white mb-5 uppercase drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
             ENGENHARIA <br className="hidden sm:inline" />
-            <span className="text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.45)' }}>
-              DE ALTA
-            </span>{' '}
-            PERFORMANCE
+            DE ALTA PERFORMANCE
           </h2>
 
           <p className="text-base sm:text-lg text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto">
