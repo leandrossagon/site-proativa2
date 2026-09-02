@@ -12,11 +12,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ settings }) => {
         {/* Main Hero Header */}
         <div className="text-center max-w-4xl mx-auto mb-12">
       <div className="flex justify-center mb-8 relative">
-        <div className="absolute inset-0 bg-white/10 blur-[40px] rounded-full w-3/4 h-3/4 mx-auto top-1/2 -translate-y-1/2"></div>
         <img 
-          src="/logo1.png" 
+          src="/loogo2.png" 
           alt="PROATIVA Tecnologies" 
-          className="relative z-10 h-56 sm:h-[340px] object-contain drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]" 
+          className="relative z-10 h-56 sm:h-[340px] object-contain brightness-[0.9] contrast-[1.15] [image-rendering:-webkit-optimize-contrast]" 
         />
       </div>
 

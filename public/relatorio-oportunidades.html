@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapeamento de Oportunidades - PROATIVA</title>
+    <style>
+        :root {
+            --primary: #0F172A; 
+            --secondary: #00A3FF; 
+            --text: #1E293B; 
+            --bg: #F8FAFC; 
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            min-height: 100vh;
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #E2E8F0;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .logo-container {
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        h2 {
+            color: var(--primary);
+            font-size: 20px;
+            margin-top: 40px;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        h3 {
+            color: var(--secondary);
+            font-size: 16px;
+            margin-top: 25px;
+            font-weight: bold;
+        }
+        p, li {
+            font-size: 14px;
+            color: #334155;
+            text-align: justify;
+        }
+        ul, ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .urgency-high {
+            background-color: #FEF2F2;
+            border-left: 4px solid #EF4444;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .urgency-medium {
+            background-color: #FFFBEB;
+            border-left: 4px solid #F59E0B;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .urgency-low {
+            background-color: #F0FDF4;
+            border-left: 4px solid #10B981;
+            padding: 15px 20px;
+            margin: 20px 0;
+        }
+        .print-btn {
+            display: block;
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 6px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            border: none;
+            font-size: 15px;
+            text-transform: uppercase;
+            transition: background 0.3s;
+        }
+        .print-btn:hover {
+            background-color: #1E293B;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        .badge-red { background-color: #EF4444; }
+        .badge-yellow { background-color: #F59E0B; }
+        .badge-green { background-color: #10B981; }
+        .footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #E2E8F0;
+            text-align: center;
+            font-size: 11px;
+            color: #94A3B8;
+        }
+        @media print {
+            .print-btn { display: none; }
+            .container { box-shadow: none; padding: 0; }
+            body { background-color: white; }
+            @page { margin: 1.5cm; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="print-btn" onclick="window.print()">📥 Imprimir / Salvar Relatório em PDF</button>
+
+        <div class="header">
+            <!-- LOGO PROATIVA -->
+            <div class="logo-container">
+                <img src="/loogo2.png" alt="PROATIVA Tecnologies" style="max-height: 140px; width: auto; margin: 0 auto; display: block; filter: brightness(0.9) contrast(1.15); image-rendering: -webkit-optimize-contrast;" />
+            </div>
+            <h1>Inteligência de Mercado: Oportunidades B2B e Setor Público</h1>
+            <p style="margin:5px 0 0 0; font-size: 13px; font-weight: 500; color: #64748B;">Mapeamento Tático de Contratações (Privadas e Governamentais)</p>
+        </div>
+
+        <section>
+            <p>Este relatório compila os canais e estratégias exatas para captação de serviços de engenharia, automação, SDAI e CFTV. O foco deste mapeamento é a <strong>baixa barreira de entrada</strong>, priorizando vias que não exigem balanços patrimoniais milionários ou atestados de capacidade técnica de décadas, ideais para empresas em fase de tração agressiva.</p>
+
+            <h2>1. Contratações Imediatas <span class="badge badge-red">URGÊNCIA ALTA (1 a 15 dias)</span></h2>
+            <p>Oportunidades de entrada rápida, onde o cliente não tem tempo para burocracia e precisa resolver o problema "para ontem".</p>
+
+            <div class="urgency-high">
+                <h3>A. Setor Público: "Dispensa de Licitação" (Lei 14.133/2021)</h3>
+                <p>Muitas pessoas acham que vender para o governo exige licitações complexas. Errado. A Nova Lei de Licitações permite que órgãos públicos comprem serviços de manutenção, engenharia e CFTV de forma DIRETA (sem pregão), até o limite de <strong>R$ 119.812,02</strong> (para obras/serviços de engenharia) e <strong>R$ 59.906,02</strong> (para compras e outros serviços).</p>
+                <ul>
+                    <li><strong>O que exigem:</strong> Apenas CNPJ ativo, Certidões Negativas (Receita, FGTS, Trabalhista) limpas e conta bancária PJ. Não pedem faturamento anterior.</li>
+                    <li><strong>Onde Encontrar Agora:</strong> Acesse o <strong>PNCP (Portal Nacional de Contratações Públicas)</strong> e filtre por "Aviso de Contratação Direta". Outro portal vital é o <strong>ComprasNet (gov.br/compras)</strong> no módulo "Cotação Eletrônica".</li>
+                    <li><strong>Perfil da Demanda:</strong> Conserto de portão de delegacia, instalação de catracas em postos de saúde, reparo de alarme de incêndio em escolas estaduais.</li>
+                </ul>
+
+                <h3>B. Setor Privado: Administradoras de Condomínios (Manutenção Emergencial)</h3>
+                <p>Síndicos profissionais lidam com emergências diárias. Se o portão da garagem quebra, o prédio fica vulnerável e a contratação é imediata (fundo de reserva).</p>
+                <ul>
+                    <li><strong>Onde atacar:</strong> Cadastre a PROATIVA no portal <strong>SíndicoNet</strong> (na aba de fornecedores da sua região).</li>
+                    <li><strong>Ação Ativa:</strong> Mapeie as maiores administradoras (ex: Lello, Guarida, Auxiliadora Predial) e envie o portfólio diretamente para o setor de "Homologação de Fornecedores/Manutenção". Eles precisam de empresas ágeis no radar para acionar em emergências finais de semana.</li>
+                </ul>
+            </div>
+
+            <h2>2. Contratações de Médio Prazo <span class="badge badge-yellow">MÉDIA COMPLEXIDADE (30 a 60 dias)</span></h2>
+            <p>Contratos maiores, com fluxo de caixa constante. Exigem cadastro prévio, mas aceitam empresas novas desde que tenham mão de obra qualificada.</p>
+
+            <div class="urgency-medium">
+                <h3>A. Terceirização para Grandes Construtoras (Mão de Obra)</h3>
+                <p>Construtoras (MRV, Tenda, Cury, Direcional, Plano&Plano) não contratam funcionários próprios para instalar cabos de rede, câmeras ou interfones nos prédios. Eles subcontratam empresas locais (Empreiteiras de Mão de Obra e Instalação).</p>
+                <ul>
+                    <li><strong>O que exigem:</strong> CNPJ (pode ser recente), PPRA/PCMSO (Segurança do Trabalho da sua equipe), e capacidade de alocar 2 a 5 técnicos na obra.</li>
+                    <li><strong>Como acessar:</strong> Todas as grandes construtoras possuem um portal chamado "Seja um Fornecedor". O cadastro é online e gratuito. Ao cadastrar os CNAEs de instalação elétrica/CFTV, a sua empresa entra na base de cotação do setor de Suprimentos (Engenharia) deles.</li>
+                </ul>
+
+                <h3>B. Empresas de Facilities e Gestão Predial</h3>
+                <p>Empresas gigantes de facilities (Sodexo, Manserv, GPS, Verzani & Sandrini) cuidam de prédios corporativos e galpões logísticos, mas não dominam hardware pesado (SDAI, Catracas). Eles quarteirizam esse serviço.</p>
+                <ul>
+                    <li><strong>Oportunidade:</strong> Galpões logísticos (Mercado Livre, Amazon, Shopee) geridos por essas empresas frequentemente precisam de rotas de cabos ópticos e manutenção de CFTV/SDAI noturna. Aborde gerentes de facilities no LinkedIn oferecendo "Parceria de Execução Técnica Local".</li>
+                </ul>
+            </div>
+
+            <h2>3. Contratos de Grande Porte <span class="badge badge-green">LONGO PRAZO E ESTRUTURAÇÃO (90+ dias)</span></h2>
+            <p>Ações estratégicas para quando a empresa já possuir lastro financeiro e atestados técnicos robustos.</p>
+
+            <div class="urgency-low">
+                <h3>A. Pregões Eletrônicos (SRP)</h3>
+                <p>O Sistema de Registro de Preços (SRP) do Governo Federal permite que você vença uma licitação (ex: "Fornecimento e Instalação de 500 Câmeras IP") e forneça aos poucos, sob demanda, ao longo de 12 meses.</p>
+                <ul>
+                    <li><strong>Requisito de Ouro:</strong> Atestado de Capacidade Técnica. A cada obra pequena (urgente) que você fizer no setor privado, PEÇA um atestado assinado pelo cliente (síndico/engenheiro) reconhecendo que você instalou os equipamentos a contento. Você usará isso para provar ao governo que sabe fazer o serviço.</li>
+                </ul>
+
+                <h3>B. Projetos Turn-Key em Retrofit de Edifícios Corporativos</h3>
+                <p>Edifícios comerciais antigos atualizando infraestrutura para atrair empresas multinacionais. Exige projeto executivo completo: do controle de acesso nos elevadores, passando por SDAI nas salas, até a automação do ar-condicionado.</p>
+            </div>
+
+            <h2 style="border-bottom: 2px solid #0F172A;">Checklist Prático (Passo a Passo Imediato):</h2>
+            <ol>
+                <li><strong>Obtenha o SICAF (Nível 1 e 2):</strong> Acesse gov.br, faça login com o e-mail/e-CNPJ da empresa, e cadastre-se no SICAF. É gratuito e sai na hora. Isso é o passaporte para disputar Dispensas Eletrônicas.</li>
+                <li><strong>Monitore o PNCP diariamente:</strong> Coloque na rotina matinal olhar o <em>Portal Nacional de Contratações Públicas</em> filtrando pela sua UF e palavras-chave (CFTV, Alarme, Manutenção, Catraca).</li>
+                <li><strong>Emita um Portfólio em PDF:</strong> Crie um PDF simples (1 página), objetivo, colocando a logo da PROATIVA, informando: "Equipe técnica própria, NR-10 e NR-35, especialistas em SDAI e Acesso". Envie para as 10 maiores administradoras de condomínio da sua região.</li>
+            </ol>
+            
+        </section>
+
+        <div class="footer">
+            Inteligência Estratégica e Comercial &copy; 2026 - PROATIVA Tecnologies. Todos os direitos reservados.
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiê de Infraestrutura e Expansão - PROATIVA</title>
+    <style>
+        :root {
+            --primary: #0F172A; 
+            --secondary: #0047AB; /* Mais sóbrio */
+            --text: #1E293B; 
+            --bg: #F8FAFC; 
+        }
+        body {
+            font-family: 'Times New Roman', Times, serif; /* Trazendo um tom mais documental/jurídico */
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 50px 40px;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            min-height: 100vh;
+        }
+        header {
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        h1 {
+            color: #000;
+            font-size: 26px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h2 {
+            color: var(--secondary);
+            font-size: 20px;
+            margin-top: 40px;
+            border-bottom: 1px solid #E2E8F0;
+            padding-bottom: 8px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        h3 {
+            color: #000;
+            font-size: 16px;
+            margin-top: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+        }
+        p, li {
+            font-size: 15px;
+            color: #333;
+            text-align: justify;
+        }
+        ul, ol {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        .highlight-box {
+            background-color: #F1F5F9;
+            border-left: 4px solid var(--secondary);
+            padding: 15px 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .print-btn {
+            display: block;
+            width: 100%;
+            background-color: #000;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .print-btn:hover {
+            background-color: #333;
+        }
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #000;
+            text-align: center;
+            font-size: 11px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #666;
+        }
+        @media print {
+            .print-btn { display: none; }
+            .container { box-shadow: none; padding: 0; }
+            body { background-color: white; }
+            @page { margin: 2cm; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button class="print-btn" onclick="window.print()">Imprimir / Salvar em PDF (Formato Ofício)</button>
+
+        <header>
+            <h1>Dossiê Operacional e Infraestrutura Corporativa</h1>
+            <p style="margin:0; font-family: Arial, sans-serif; font-weight: bold;">PROATIVA TECNOLOGIES</p>
+            <p style="margin:5px 0 0 0; font-size: 13px; font-family: Arial, sans-serif;">Classificação: Uso Interno / Estratégico</p>
+        </header>
+
+        <section>
+            <p>Este memorando detalha o caminho operacional, técnico e burocrático para a estruturação física e digital da PROATIVA Tecnologies. O objetivo não é apenas apresentar conceitos, mas sim fornecer o roteiro exato (o "caminho das pedras") de como implementar cada etapa, mitigando riscos jurídicos, quedas de operação e custos ocultos.</p>
+
+            <h2>1. Proteção do Patrimônio: Registro de Marca (INPI)</h2>
+            <p>No Brasil, não existe direito adquirido apenas pelo uso do nome ou por ter um CNPJ registrado na Junta Comercial. Se a marca "PROATIVA" não estiver registrada no INPI (Instituto Nacional da Propriedade Industrial), qualquer concorrente pode registrá-la amanhã e notificar a sua empresa para trocar letreiros, frota e domínio sob pena de multa diária.</p>
+
+            <h3>O Caminho das Pedras (Como fazer):</h3>
+            <ol>
+                <li><strong>A Busca Prévia (Obrigatório):</strong> Antes de pagar qualquer taxa, acesse o sistema BuscaWeb do INPI. Pesquise por "Proativa" na classe de serviços que a empresa atua (geralmente a Classe 37 para instalação/manutenção e Classe 42 para projetos de engenharia/software). Se já existir uma marca registrada idêntica no mesmo setor, o pedido será indeferido.</li>
+                <li><strong>Cadastro e Emissão da GRU:</strong> Acesse o portal e-INPI. Cadastre o CNPJ da empresa. O primeiro passo financeiro é emitir uma Guia de Recolhimento da União (GRU) com o código de serviço 389 (Pedido de Registro de Marca). <em>Dica de ouro: Microempresas e EPPs têm até 60% de desconto nas taxas federais.</em></li>
+                <li><strong>Peticionamento:</strong> Somente após pagar a GRU (e o banco compensar), o sistema libera o formulário de pedido. Você enviará a logomarca (em JPG, sem fundo complexo) e especificará os serviços prestados.</li>
+                <li><strong>Acompanhamento da RPI:</strong> O INPI não manda e-mail avisando do andamento. Toda terça-feira é publicada a Revista da Propriedade Industrial (RPI). Você deve consultar o seu processo para verificar se houve oposição de terceiros ou deferimento.</li>
+            </ol>
+            
+            <div class="highlight-box">
+                <strong>Alerta contra Golpes:</strong> Assim que seu pedido entrar no sistema do INPI, ele se torna público. Agências fraudulentas vão varrer esses dados e mandar boletos falsos de "Taxa de Manutenção" para o e-mail ou endereço da sua empresa. O INPI não envia boletos. Todas as taxas são geradas por você mesmo dentro do portal logado do governo.
+            </div>
+
+            <h2>2. Presença Digital: Registro de Domínio Próprio</h2>
+            <p>O domínio é o seu terreno na internet. Usar e-mails genéricos (@gmail, @yahoo) em orçamentos de engenharia derruba a credibilidade em licitações e concorrências B2B.</p>
+
+            <h3>Procedimento de Aquisição (.com.br):</h3>
+            <ul>
+                <li><strong>Onde registrar:</strong> Fuja de revendedores como HostGator, Locaweb ou GoDaddy na hora de comprar o ".br". O único dono da internet brasileira é o <strong>Registro.br</strong> (NIC.br). Quando você usa intermediários, eles cobram o dobro para renovar no segundo ano e muitas vezes registram o domínio no CNPJ deles, prendendo sua marca.</li>
+                <li><strong>Acesso e Pagamento:</strong> Entre em registro.br, digite o nome desejado (ex: <em>proativatec.com.br</em>). O sistema pedirá um CPF para o titular da conta e o CNPJ para ser o dono do domínio. O custo é congelado: R$ 40,00 anuais (pagos via PIX, Cartão ou Boleto diretamente ao NIC.br).</li>
+            </ul>
+
+            <h2>3. Telefonia Escalável: Números Virtuais e PABX IP (VoIP)</h2>
+            <p>O modelo antigo de contratar linhas de cobre com a Vivo ou Claro engessa a empresa. Se o escritório mudar de bairro, o número muda. A solução moderna é o VoIP com Numeração Virtual (DID).</p>
+
+            <h3>Como estruturar a telefonia VoIP:</h3>
+            <ol>
+                <li><strong>Contratação da Operadora VoIP:</strong> Procure empresas homologadas pela Anatel que operam 100% em nuvem (ex: Zenvia, Locaweb Vono, TW Solutions, ou Jive/GoTo).</li>
+                <li><strong>Portabilidade ou Novo Número:</strong> Você pode pedir a portabilidade do seu número fixo atual para a operadora VoIP. Alternativamente, você aluga um "Número Virtual" (DID) novo na nuvem. O custo é irrisório, cerca de R$ 15 a R$ 30 por mês pela manutenção do número.</li>
+                <li><strong>Como atender as ligações:</strong> A magia do VoIP é que ele não precisa de cabo telefônico. Você atende de três formas:
+                    <ul>
+                        <li><strong>Hardphone:</strong> Telefones de mesa (como os da marca Intelbras ou Yealink) que são plugados no cabo de rede da internet, não no cabo de telefone.</li>
+                        <li><strong>Softphone:</strong> Um software instalado nos computadores (ex: Zoiper, MicroSIP) onde o atendente usa um headset (fone de ouvido).</li>
+                        <li><strong>App no Celular:</strong> O vendedor instala o app do PABX no celular dele. Quando o cliente liga no fixo da empresa, toca no celular do vendedor onde ele estiver (via 4G/5G).</li>
+                    </ul>
+                </li>
+            </ol>
+            <p>Isso permite criar URA ("Digite 1 para Comercial, 2 para Suporte"), fila de espera e gravação de chamadas sem precisar comprar equipamentos caros de PABX físico.</p>
+
+            <h2>4. O Coração da Operação: Link Dedicado</h2>
+            <p>Banda larga comum (internet residencial/PME que usamos em casa) cai, oscila, e tem taxa de upload baixíssima. Para um escritório onde o VoIP e o ERP rodam o dia todo, a internet não pode piscar.</p>
+
+            <h3>Implementando a conectividade:</h3>
+            <ul>
+                <li><strong>O que é o Link Dedicado:</strong> É uma fibra óptica que sai do provedor e vai exclusivamente para a sua empresa. A banda é garantida (se você contratou 100 Mega, terá 100 Mega de download e 100 Mega de upload, sem oscilação) e o SLA de reparo costuma ser de 4 horas em contrato (enquanto a banda larga normal leva até 48 horas).</li>
+                <li><strong>O Caminho das Pedras:</strong> Cote com operadoras B2B (Vivo Fibra Corporativa, Algar Telecom, ou provedores regionais de fibra da sua cidade que possuem ASN próprio).</li>
+                <li><strong>A Regra de Ouro (Redundância):</strong> Nunca tenha apenas um link. O padrão corporativo é o <strong>SD-WAN (Dual WAN)</strong>. Você contrata um Link Dedicado (principal) e uma banda larga comum da Claro/Net (como backup). O roteador de borda da sua empresa deve ser configurado para "Failover": se o link dedicado for rompido por um caminhão na rua, o roteador joga todo o tráfego para a banda larga em 2 segundos, e a ligação telefônica do cliente sequer cai.</li>
+            </ul>
+
+            <h2>5. Estruturando o Escritório Físico do Zero</h2>
+            <p>Como uma empresa de infraestrutura de tecnologia, o escritório da PROATIVA deve ser um verdadeiro showroom vivo para os clientes. A organização interna vende o projeto.</p>
+
+            <h3>Cronograma prático de montagem:</h3>
+            <ol>
+                <li><strong>Projeto de Cabeamento Estruturado:</strong> Nada de fios soltos. Instale um Rack Servidor (padrão 19 polegadas) em uma sala refrigerada. Todo o cabeamento de rede (utilize no mínimo cabos Categoria 6 - Cat6, para suportar tráfego Gigabit) deve terminar em Patch Panels dentro desse rack. </li>
+                <li><strong>Rede Wi-Fi Corporativa:</strong> Evite roteadores domésticos. Utilize Access Points (APs) fixados no teto, geridos por uma controladora central (recomendo a linha UniFi da Ubiquiti ou TP-Link Omada). Crie redes separadas por VLAN:
+                    <ul>
+                        <li>VLAN 1: Administrativo (Acesso a servidores e impressoras).</li>
+                        <li>VLAN 2: Visitantes (Acesso apenas à internet, isolada da rede da empresa, com portal de "Check-in").</li>
+                    </ul>
+                </li>
+                <li><strong>Proteção de Energia (UPS/Nobreaks):</strong> O rack central, os computadores vitais e o PABX devem estar amparados por um nobreak senoidal online. Se a luz acabar, a internet e os telefones precisam continuar operando.</li>
+                <li><strong>Controle de Acesso e CFTV (Eat Your Own Dog Food):</strong> A sede deve usar os equipamentos que a PROATIVA vende. O controle de acesso por reconhecimento facial na porta da diretoria e as câmeras monitorando o perímetro servem como prova social imediata para clientes que visitarem o escritório para reuniões.</li>
+            </ol>
+            
+            <p style="margin-top: 40px; font-weight: bold; border-top: 1px dashed #ccc; padding-top: 20px;">
+                Estas diretrizes formam a fundação técnica inegociável para escalar a operação com estabilidade, protegendo a marca, garantindo comunicação ininterrupta com o mercado e demonstrando robustez operacional B2B perante clientes e fornecedores.
+            </p>
+
+        </section>
+
+        <div class="footer">
+            Documento de Planejamento Estratégico - PROATIVA Tecnologies. Proibida reprodução não autorizada.
+        </div>
+    </div>
+</body>
+</html>
