@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  Lock, 
+  Lock, Users, 
   Unlock, 
   X, 
   Search, 
@@ -26,6 +26,9 @@ import {
 import { LeadItem, LeadStatus, SectorId, CompanySettings, SectorInfo } from '../types';
 import { EmailTemplatesManager } from './EmailTemplatesManager';
 import { DashboardMetrics } from './DashboardMetrics';
+import { AdminLogin } from "./AdminLogin";
+import { AdminUsersManager } from "./AdminUsersManager";
+import { AdminUser } from "../types";
 
 interface AdminPanelProps {
   isOpen: boolean;
@@ -57,7 +60,8 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [pinInput, setPinInput] = useState<string>('');
   const [pinError, setPinError] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'leads' | 'settings' | 'novo_lead' | 'emails'>('dashboard');
+  const [currentUser, setCurrentUser] = useState<AdminUser | null>(null);
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'leads' | 'settings' | 'novo_lead' | 'emails' | 'users'>('dashboard');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [statusFilter, setStatusFilter] = useState<string>('todos');
   const [sectorFilter, setSectorFilter] = useState<string>('todos');
@@ -79,6 +83,11 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   const [newLeadBudget, setNewLeadBudget] = useState('');
 
   if (!isOpen) return null;
+
+  const handleLoginSuccess = (user: AdminUser) => {
+    setCurrentUser(user);
+    setIsAuthenticated(true);
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -122,12 +131,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
   };
 
   const handleExportCSV = () => {
-    const headers = 'ID,Nome,WhatsApp,Email,Setor,Porte,Status,Data,Detalhes,Notas\n';
+    const headers = "ID,Nome,WhatsApp,Email,Setor,Porte,Status,Data,Detalhes,Notas\n";
     const rows = leads.map((l) => {
       const cleanDetails = `"${(l.detalhes || '').replace(/"/g, '""')}"`;
       const cleanNotes = `"${(l.notes || '').replace(/"/g, '""')}"`;
       return `${l.id},"${l.nome}","${l.whatsapp}","${l.email || ''}",${l.setor},${l.porteProjeto || 'padrao'},${l.status},${l.createdAt},${cleanDetails},${cleanNotes}`;
-    }).join('\n');
+      }).join('\n');
 
     const blob = new Blob([headers + rows], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -178,10 +187,10 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 overflow-y-auto animate-in fade-in duration-150">
-      <div className="glass-panel-elevated w-full max-w-5xl rounded-2xl shadow-2xl border border-white/15 overflow-hidden flex flex-col max-h-[90vh] text-white">
+      <div className={`glass-panel-elevated w-full ${!isAuthenticated ? 'max-w-md' : 'max-w-5xl'} rounded-2xl shadow-2xl border border-white/15 overflow-hidden flex flex-col max-h-[90vh] text-white transition-all duration-300`}>
         {/* Modal Top Header */}
-        <div className="bg-[#081020] text-white px-6 py-4 flex items-center justify-between border-b border-white/10">
-          <div className="flex items-center gap-3">
+        <div className={`bg-[#081020] text-white px-4 py-3 sm:px-6 sm:py-4 flex items-center ${!isAuthenticated ? 'justify-center text-center' : 'justify-between'} border-b border-white/10 relative`}>
+          <div className={`flex items-center ${!isAuthenticated ? 'flex-col gap-2' : 'gap-3'}`}>
             <div className="w-9 h-9 rounded-lg bg-[#00A3FF]/20 border border-[#00A3FF]/40 flex items-center justify-center text-[#00A3FF] glow-accent">
               <Lock className="w-5 h-5" />
             </div>
@@ -192,73 +201,35 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
               <h2 className="text-base sm:text-lg font-black text-white">Painel Administrativo PROATIVA</h2>
             </div>
           </div>
+
+          <div className={`flex items-center gap-4 ${!isAuthenticated ? 'absolute right-2 top-2' : ''}`}>
+            {isAuthenticated && (
+              <button
+                onClick={() => { setIsAuthenticated(false); setCurrentUser(null); }}
+                className="text-xs font-bold text-red-400 hover:text-red-300 uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                Sair
+              </button>
+            )}
           <button
             onClick={onClose}
             className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
           >
             <X className="w-6 h-6" />
           </button>
+          </div>
         </div>
 
         {/* Authentication Gate */}
         {!isAuthenticated ? (
-          <div className="p-8 sm:p-12 text-center max-w-md mx-auto my-auto space-y-6">
-            <div className="w-16 h-16 bg-[#00A3FF]/15 text-[#00A3FF] border border-[#00A3FF]/30 rounded-full flex items-center justify-center mx-auto glow-accent">
-              <Lock className="w-8 h-8" />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white">Acesso Restrito à Gestão</h3>
-              <p className="text-xs text-slate-400 mt-1 font-mono">
-                Autenticação requerida para visualização de dados comerciais e leads.
-              </p>
-            </div>
-
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div>
-                <input
-                  type="password"
-                  value={pinInput}
-                  onChange={(e) => {
-                    setPinInput(e.target.value);
-                    setPinError(false);
-                  }}
-                  placeholder="Digite a senha (padrão: admin123 ou 1880)"
-                  className="w-full px-4 py-3 bg-slate-900/80 border border-white/15 rounded-xl text-center text-sm font-mono text-white placeholder-slate-500 focus:outline-none focus:border-[#00A3FF] focus:ring-2 focus:ring-[#00A3FF]/20"
-                  autoFocus
-                />
-                {pinError && (
-                  <p className="text-xs text-rose-400 mt-1.5 font-medium">
-                    Senha incorreta. Tente "admin123" ou "1880".
-                  </p>
-                )}
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-[#00A3FF] hover:bg-[#0090E0] text-white py-3 rounded-xl font-bold text-xs uppercase tracking-widest glow-accent transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Unlock className="w-4 h-4" />
-                Desbloquear Terminal
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setPinInput('admin123');
-                  setIsAuthenticated(true);
-                }}
-                className="text-xs text-[#00A3FF] hover:underline block mx-auto font-mono"
-              >
-                Entrar com credencial de demonstração
-              </button>
-            </form>
-          </div>
+          <AdminLogin onLogin={handleLoginSuccess} onCancel={onClose} />
         ) : (
           /* Authenticated Dashboard */
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Dashboard Tabs & Actions */}
             <div className="bg-[#081020]/90 px-6 py-3 border-b border-white/10 flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-center gap-2">
+
                 <button
                   onClick={() => setActiveTab('dashboard')}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -270,6 +241,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <BarChart3 className="w-3.5 h-3.5" />
                   Métricas
                 </button>
+
                 <button
                   onClick={() => setActiveTab('leads')}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
@@ -280,6 +252,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 >
                   Leads Recebidos ({leads.length})
                 </button>
+
                 <button
                   onClick={() => setActiveTab('novo_lead')}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -291,6 +264,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <Plus className="w-3.5 h-3.5" />
                   Cadastrar Lead Manual
                 </button>
+
                 <button
                   onClick={() => setActiveTab('settings')}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -302,6 +276,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <Sliders className="w-3.5 h-3.5" />
                   Dados de Contato & SLA
                 </button>
+
                 <button
                   onClick={() => setActiveTab('emails')}
                   className={`px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
@@ -313,9 +288,22 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <Mail className="w-3.5 h-3.5" />
                   E-mails B2B
                 </button>
+
+                <button
+                  onClick={() => setActiveTab("users")}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer ${
+                    activeTab === "users"
+                      ? "bg-[#00A3FF] text-white glow-accent"
+                      : "text-slate-400 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <Users className="w-3.5 h-3.5" />
+                  Usuários
+                </button>
               </div>
 
               <div className="flex items-center gap-2">
+
                 <button
                   onClick={handleExportCSV}
                   className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-emerald-500/20 flex items-center gap-1.5 transition-colors cursor-pointer"
@@ -324,6 +312,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                   <FileSpreadsheet className="w-3.5 h-3.5 text-emerald-400" />
                   Exportar CSV
                 </button>
+
                 <button
                   onClick={onResetDemoData}
                   className="p-1.5 text-slate-400 hover:text-[#00A3FF] hover:bg-white/5 rounded-lg transition-colors cursor-pointer"
@@ -403,7 +392,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                           className="glass-card border border-white/10 rounded-xl p-4 sm:p-5 hover:border-[#00A3FF]/40 transition-all space-y-3"
                         >
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                            <div className="flex items-center gap-3">
+                            <div className={`flex items-center ${!isAuthenticated ? 'flex-col gap-2' : 'gap-3'}`}>
                               <span className="text-[10px] font-mono font-bold text-[#00A3FF] bg-[#00A3FF]/10 border border-[#00A3FF]/20 px-2 py-0.5 rounded">
                                 {lead.id}
                               </span>
@@ -426,6 +415,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                                 <option value="fechado">Status: Fechado</option>
                                 <option value="arquivado">Status: Arquivado</option>
                               </select>
+
 
                               <button
                                 onClick={() => onDeleteLead(lead.id)}
@@ -477,6 +467,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                                     className="flex-1 px-2.5 py-1 text-xs border border-[#00A3FF] rounded bg-slate-900 text-white"
                                     autoFocus
                                   />
+
                                   <button
                                     onClick={() => {
                                       onUpdateLeadNotes(lead.id, tempNotes);
@@ -486,6 +477,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                                   >
                                     <Check className="w-3.5 h-3.5" />
                                   </button>
+
                                   <button
                                     onClick={() => setEditingNotesId(null)}
                                     className="p-1 text-slate-400 hover:text-slate-200"
@@ -510,6 +502,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                             </div>
 
                             {/* WhatsApp Connect Button */}
+
                             <button
                               onClick={() => openWhatsAppToClient(lead.whatsapp, lead.nome)}
                               className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors glow-emerald cursor-pointer"
@@ -616,6 +609,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                       className="w-full px-3 py-2 bg-slate-900 border border-white/15 rounded-lg text-xs text-white resize-none"
                     ></textarea>
                   </div>
+
 
                   <button
                     type="submit"
@@ -760,6 +754,7 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                     </div>
                   </div>
 
+
                   <button
                     type="submit"
                     className="w-full bg-[#00A3FF] hover:bg-[#0090E0] text-white py-3 rounded-sm text-xs font-bold uppercase tracking-widest flex items-center justify-center gap-2 glow-accent transition-colors cursor-pointer"
@@ -775,6 +770,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
             {activeTab === 'emails' && (
               <div className="flex-1 overflow-y-auto p-6 max-w-4xl mx-auto w-full">
                 <EmailTemplatesManager leads={leads} />
+              </div>
+            )}
+
+            {activeTab === "users" && (
+              <div className="flex-1 overflow-y-auto p-6 max-w-4xl mx-auto w-full">
+                <AdminUsersManager currentUser={currentUser!} />
               </div>
             )}
           </div>

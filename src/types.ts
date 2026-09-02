@@ -102,3 +102,7 @@ export interface ChatMessage {
   isScheduleForm?: boolean;
 }
 
+
+export type AdminRole = "admin" | "manager" | "viewer";\nexport interface AdminUser {\n  id: string;\n  name: string;\n  username: string;\n  password?: string;\n  role: AdminRole;\n  createdAt: string;\n}
+  email?: string;
+  requirePasswordChange?: boolean;
