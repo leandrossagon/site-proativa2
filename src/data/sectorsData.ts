@@ -7,6 +7,7 @@ export const INITIAL_COMPANY_SETTINGS: CompanySettings = {
   phone: '+55 11 92518-4811',
   whatsapp: '5511925184811',
   email: 'suporte@proativatec.com',
+  commercialEmail: 'comercial@proativatec.com',
   address: 'Av. José Joaquim Seabra, 91 - Salas 01, 02 e 03, Jd. Bonfiglioli, CEP 05364-000 - São Paulo / SP',
   cnpj: '14.892.401/0001-88',
   slaEmergencyPhone: '+55 11 92518-4811',

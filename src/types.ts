@@ -53,6 +53,7 @@ export interface CompanySettings {
   phone: string;
   whatsapp: string;
   email: string;
+  commercialEmail?: string;
   address: string;
   cnpj: string;
   slaEmergencyPhone: string;

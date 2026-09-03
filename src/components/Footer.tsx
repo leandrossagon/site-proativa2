@@ -90,7 +90,12 @@ export const Footer: React.FC<FooterProps> = ({
               </li>
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-[#00A3FF] shrink-0 mt-0.5" />
-                <span className="text-slate-400">{settings.email}</span>
+                <div>
+                  <div className="text-slate-400">Suporte: {settings.email}</div>
+                  {settings.commercialEmail && (
+                    <div className="text-slate-400 mt-1">Comercial: {settings.commercialEmail}</div>
+                  )}
+                </div>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-slate-500 shrink-0 mt-0.5" />
