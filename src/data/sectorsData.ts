@@ -4,12 +4,12 @@ export const INITIAL_COMPANY_SETTINGS: CompanySettings = {
   companyName: 'PROATIVA Tecnologies',
   tagline: 'SOLUÇÕES E TECNOLOGIA EM AUTOMAÇÕES',
   yearsOfExperience: 18,
-  phone: '(11) 3840-9200',
-  whatsapp: '5511989409200',
-  email: 'contato@proativatecnologies.com.br',
-  address: 'Av. Paulista, 2200 - Conj. 1402, Bela Vista - São Paulo / SP',
+  phone: '+55 11 92518-4811',
+  whatsapp: '5511925184811',
+  email: 'suporte@proativatec.com',
+  address: 'Av. José Joaquim Seabra, 91 - Salas 01, 02 e 03, Jd. Bonfiglioli, CEP 05364-000 - São Paulo / SP',
   cnpj: '14.892.401/0001-88',
-  slaEmergencyPhone: '0800 770 9200',
+  slaEmergencyPhone: '+55 11 92518-4811',
   operatingHours: 'Segunda a Sexta das 08h às 18h | Plantão SLA 24/7',
 };
 

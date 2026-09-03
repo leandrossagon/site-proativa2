@@ -77,14 +77,14 @@ export const Footer: React.FC<FooterProps> = ({
               <li className="flex items-start gap-2.5">
                 <Phone className="w-4 h-4 text-[#FF6B00] shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-mono font-semibold text-white">{settings.phone}</div>
+                  <div className="font-mono font-semibold text-white">WhatsApp: {settings.phone}</div>
                   <div className="text-[11px] text-slate-400 font-mono">{settings.operatingHours}</div>
                 </div>
               </li>
               <li className="flex items-start gap-2.5">
                 <Shield className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-mono font-semibold text-white">Plantão SLA: {settings.slaEmergencyPhone}</div>
+                  <div className="font-mono font-semibold text-white">Suporte via WhatsApp: {settings.slaEmergencyPhone}</div>
                   <div className="text-[10px] text-emerald-400 font-mono">Atendimento 24/7 para contratos ativos</div>
                 </div>
               </li>
