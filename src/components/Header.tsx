@@ -8,7 +8,9 @@ import {
   X, 
   Layers, 
   Calculator,
-  ChevronDown
+  ChevronDown,
+  MessageCircle,
+  Mail
 } from 'lucide-react';
 import { CompanySettings, SectorInfo } from '../types';
 
@@ -44,11 +46,11 @@ export const Header: React.FC<HeaderProps> = ({
           <div className="flex items-center gap-4 flex-wrap justify-center sm:justify-start">
             <span className="inline-flex items-center gap-1.5 text-emerald-400 font-semibold text-[11px] uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#22c55e] animate-pulse"></span>
-              Plantão SLA 24/7: {settings.slaEmergencyPhone}
+              PLANTÃO WHATSAPP: {settings.slaEmergencyPhone}
             </span>
             <span className="hidden md:inline-flex items-center gap-1.5 text-slate-300 text-[11px]">
-              <Phone className="w-3.5 h-3.5 text-[#FF6B00]" />
-              {settings.phone}
+              <Mail className="w-3.5 h-3.5 text-[#00A3FF]" />
+              {settings.commercialEmail || settings.email}
             </span>
             <span className="hidden lg:inline-flex items-center gap-1.5 text-slate-300 text-[11px]">
               <Clock className="w-3.5 h-3.5 text-[#00A3FF]" />

@@ -76,24 +76,25 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-3 text-xs text-slate-300">
               <li className="flex items-start gap-2.5">
                 <Phone className="w-4 h-4 text-[#FF6B00] shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-mono font-semibold text-white">WhatsApp: {settings.phone}</div>
-                  <div className="text-[11px] text-slate-400 font-mono">{settings.operatingHours}</div>
+                <div className="space-y-0.5">
+                  <div className="font-mono font-bold text-white">WhatsApp: {settings.phone}</div>
+                  <div className="text-[11px] text-slate-400 font-mono">Atendimento comercial de Segunda a Sexta das 08h às 18h</div>
                 </div>
               </li>
               <li className="flex items-start gap-2.5">
                 <Shield className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                <div>
-                  <div className="font-mono font-semibold text-white">Suporte via WhatsApp: {settings.slaEmergencyPhone}</div>
-                  <div className="text-[10px] text-emerald-400 font-mono">Atendimento 24/7 para contratos ativos</div>
+                <div className="space-y-0.5">
+                  <div className="text-[11px] text-slate-400 font-mono">Nosso Plantão Funciona de Seg a Seg 24/7</div>
+                  <div className="font-mono font-bold text-white">Suporte via WhatsApp: {settings.slaEmergencyPhone}</div>
+                  <div className="text-[11px] text-emerald-400 font-mono">Atendimento 24/7 para contratos ativos</div>
                 </div>
               </li>
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-[#00A3FF] shrink-0 mt-0.5" />
-                <div>
-                  <div className="text-slate-400">Suporte: {settings.email}</div>
+                <div className="space-y-0.5">
+                  <div className="text-slate-400">{settings.email}</div>
                   {settings.commercialEmail && (
-                    <div className="text-slate-400 mt-1">Comercial: {settings.commercialEmail}</div>
+                    <div className="text-slate-400">{settings.commercialEmail}</div>
                   )}
                 </div>
               </li>

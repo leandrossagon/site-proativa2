@@ -93,7 +93,7 @@ export const CustomerChatbot: React.FC<CustomerChatbotProps> = ({
     {
       id: 'msg-1',
       sender: 'bot',
-      text: 'Olá! Sou o Assistente de Engenharia da PROATIVA Tecnologies. 🤖⚡\n\nComo posso ajudar você hoje?',
+      text: `Olá! Sou o Assistente de Engenharia da PROATIVA Tecnologies. 🤖⚡\n\nPlantão WhatsApp: ${settings.slaEmergencyPhone}\nE-mail Suporte: ${settings.email}\nE-mail Comercial: ${settings.commercialEmail}\n\nComo posso ajudar você hoje?`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       quickActions: [
         { label: '📋 Solicitar Orçamento / Lead', action: 'start_lead' },
