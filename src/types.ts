@@ -104,6 +104,15 @@ export interface ChatMessage {
 }
 
 
-export type AdminRole = "admin" | "manager" | "viewer";\nexport interface AdminUser {\n  id: string;\n  name: string;\n  username: string;\n  password?: string;\n  role: AdminRole;\n  createdAt: string;\n}
+export type AdminRole = "admin" | "manager" | "viewer";
+
+export interface AdminUser {
+  id: string;
+  name: string;
+  username: string;
+  password?: string;
+  role: AdminRole;
+  createdAt: string;
   email?: string;
   requirePasswordChange?: boolean;
+}

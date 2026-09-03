@@ -67,16 +67,6 @@ export const Header: React.FC<HeaderProps> = ({
               <Calculator className="w-3.5 h-3.5 text-[#FF6B00]" />
               Simulador de Projetos
             </button>
-            <span className="text-white/20">|</span>
-            <button
-              onClick={onOpenAdmin}
-              className="inline-flex items-center gap-1 text-[11px] uppercase tracking-wider text-slate-400 hover:text-white transition-colors"
-              id="header-btn-admin"
-              title="Acesso Administrativo ao Painel de Leads"
-            >
-              <Lock className="w-3.5 h-3.5 text-slate-400" />
-              Painel Admin
-            </button>
           </div>
         </div>
       </div>
@@ -257,16 +247,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Calculator className="w-4 h-4 text-[#FF6B00]" />
               Abrir Simulador de Projetos
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAdmin();
-              }}
-              className="w-full py-2 bg-white/5 hover:bg-white/10 text-slate-300 rounded-lg text-xs font-semibold flex items-center justify-center gap-2 border border-white/10"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              Acesso ao Painel Admin (Leads)
             </button>
           </div>
         </div>

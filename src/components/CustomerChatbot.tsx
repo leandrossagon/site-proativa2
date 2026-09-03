@@ -187,7 +187,7 @@ export const CustomerChatbot: React.FC<CustomerChatbotProps> = ({
         setChatFlow('demo_schedule');
         setDemoStep(1);
         addBotMessage(
-          'Perfeito! A visita técnica preliminar para diagnóstico e demonstração de produtos é **100% gratuita** e com ART registrada.\n\nPor favor, informe o seu **nome completo**:'
+          'Perfeito! A visita técnica preliminar para diagnóstico e demonstração de produtos é **100% gratuita**, sempre guiada por um responsável técnico, com ART/CREA registrada e expertise para adequação ao AVCB (SDAI).\n\nPor favor, informe o seu **nome completo**:'
         );
         break;
 
@@ -629,6 +629,7 @@ export const CustomerChatbot: React.FC<CustomerChatbotProps> = ({
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Digite sua dúvida ou mensagem..."
+              maxLength={256}
               className="flex-1 px-3.5 py-2.5 text-xs bg-slate-900/90 border border-white/15 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-[#00A3FF] focus:ring-1 focus:ring-[#00A3FF]/30 font-sans"
             />
             <button

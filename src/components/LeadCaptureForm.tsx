@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle2, MessageCircle, Send, ArrowRight, Building, Home, ArrowLeft } from 'lucide-react';
+import { CheckCircle2, MessageCircle, Send, ArrowRight, Building, Home, ArrowLeft, Calendar, Mail } from 'lucide-react';
 import { SectorId, LeadItem, CompanySettings } from '../types';
 
 interface LeadCaptureFormProps {
@@ -35,7 +35,12 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedLead, setSubmittedLead] = useState<LeadItem | null>(null);
+  const [intentLevel, setIntentLevel] = useState<'high' | 'low' | 'support' | null>(null);
   const [directWhatsapp, setDirectWhatsapp] = useState(true);
+
+  // Scheduler state
+  const [scheduledDate, setScheduledDate] = useState<string | null>(null);
+  const [scheduledTime, setScheduledTime] = useState<string | null>(null);
 
   React.useEffect(() => {
     if (preselectedSector) {
@@ -65,6 +70,25 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
     setIsSubmitting(true);
 
     let leadData: Omit<LeadItem, 'id' | 'createdAt' | 'status'>;
+    const textToAnalyze = profile === 'b2b' ? detalhes : necessidadeExtra;
+    const lowerText = textToAnalyze.toLowerCase();
+    
+    // Heuristic AI rules for Lead Triage
+    const supportKeywords = ['manutenç', 'manutenc', 'parado', 'quebrad', 'suporte', 'assistência', 'assistencia', 'técnica', 'tecnica', 'falha', 'erro', 'problema'];
+    const highIntentKeywords = ['visita', 'custo', 'orçament', 'orcament', 'preço', 'preco', 'valor', 'urgente', 'contratar', 'projeto', 'comprar', 'instala', 'novo'];
+    
+    const isSupportRequest = supportKeywords.some(kw => lowerText.includes(kw));
+    const hasHighIntentWords = highIntentKeywords.some(kw => lowerText.includes(kw));
+    
+    let calculatedIntent: 'high' | 'low' | 'support' = 'low';
+    
+    if (isSupportRequest) {
+      calculatedIntent = 'support';
+    } else if (hasHighIntentWords) {
+      calculatedIntent = 'high';
+    } else if (profile === 'b2b' && (porteProjeto === 'grande' || porteProjeto === 'corporativo')) {
+      calculatedIntent = 'high';
+    }
 
     if (profile === 'b2b') {
       leadData = {
@@ -93,6 +117,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
     setTimeout(() => {
       onSubmitLead(leadData);
       setIsSubmitting(false);
+      setIntentLevel(calculatedIntent);
       setSubmittedLead({
         id: `PR-${Math.floor(1000 + Math.random() * 9000)}`,
         ...leadData,
@@ -125,6 +150,31 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
     return `https://wa.me/${settings.whatsapp}?text=${text}`;
   };
 
+  const getEmailMailto = () => {
+    let subject = '';
+    let body = '';
+    let targetEmail = 'comercial-proativa@protonmail.com';
+
+    // Heuristic Email Routing Logic
+    // If it's B2B and asks for 'manutenção', 'suporte', 'parado', 'quebrado', route to support.
+    const textToAnalyze = (submittedLead?.perfil === 'b2b' ? detalhes : necessidadeExtra).toLowerCase();
+    const supportKeywords = ['manutenç', 'manutenc', 'parado', 'quebrad', 'suporte', 'assistência', 'assistencia', 'técnica', 'tecnica'];
+    const isSupportRequest = supportKeywords.some(kw => textToAnalyze.includes(kw));
+
+    if (isSupportRequest) {
+      targetEmail = 'suporte-proativa@protonmail.com';
+    }
+
+    if (submittedLead?.perfil === 'b2b') {
+      subject = `[Solicitação B2B] ${empresa} - ${nome}`;
+      body = `Detalhes do Contato:\n\nResponsável: ${nome}\nEmpresa: ${empresa}\nWhatsApp: ${whatsapp}\nEmail: ${email}\nSetor: ${setor}\nPorte: ${porteProjeto}\n\nMensagem/Escopo:\n${detalhes || 'N/A'}`;
+    } else {
+      subject = `[Solicitação B2C] ${nome} - ${tipoImovel}`;
+      body = `Detalhes do Contato:\n\nCliente: ${nome}\nWhatsApp: ${whatsapp}\nImóvel: ${tipoImovel}\nNecessidade: ${necessidadeB2C}\n\nMensagem:\n${necessidadeExtra || 'N/A'}`;
+    }
+    return `mailto:${targetEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
   return (
     <div className="max-w-3xl mx-auto glass-panel-elevated rounded-2xl p-6 sm:p-8 text-white shadow-2xl border border-white/15 relative overflow-hidden my-8" id="orcamento">
       {/* Subtle accent corner glow */}
@@ -145,19 +195,88 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
           <div className="bg-slate-900/90 border border-white/10 rounded-xl p-4 mb-6 text-left text-xs text-slate-300 space-y-1 font-mono max-w-sm mx-auto">
             <div><span className="text-[#00A3FF] font-semibold">Protocolo:</span> {submittedLead.id}</div>
             <div><span className="text-[#00A3FF] font-semibold">Perfil:</span> {submittedLead.perfil === 'b2b' ? 'Corporativo' : 'Residencial / Comercial'}</div>
-            <div><span className="text-emerald-400 font-semibold">Previsão de Retorno:</span> Em até 2 horas úteis</div>
+            <div><span className="text-emerald-400 font-semibold">Status:</span> {intentLevel === 'high' ? 'Prioridade Alta (Orçamento)' : intentLevel === 'support' ? 'Prioridade Alta (Suporte Técnico)' : 'Triagem Normal (Informativo)'}</div>
+            <div><span className="text-emerald-400 font-semibold">Previsão de Retorno:</span> {intentLevel === 'support' ? 'Em até 30 minutos (SLA Crítico)' : 'Em até 2 horas úteis'}</div>
           </div>
 
+          {intentLevel === 'high' && (
+            <div className="mb-6 p-4 bg-slate-950/50 border border-[#00A3FF]/20 rounded-xl max-w-md mx-auto animate-in slide-in-from-bottom-4 duration-500">
+              <h4 className="text-[#00A3FF] font-bold text-sm mb-3 flex items-center justify-center gap-2">
+                <Calendar className="w-4 h-4" />
+                Agendar Vistoria Técnica / Call
+              </h4>
+              <p className="text-xs text-slate-400 mb-4">
+                Como seu projeto possui alta prioridade, sugerimos agendar uma vistoria técnica gratuita.
+              </p>
+              
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                <button
+                  type="button"
+                  onClick={() => setScheduledDate('Amanhã')}
+                  className={`py-2 rounded border text-xs font-semibold transition-colors ${scheduledDate === 'Amanhã' ? 'bg-[#0052CC] border-[#00A3FF] text-white' : 'border-white/10 text-slate-300 hover:bg-white/5'}`}
+                >
+                  Amanhã
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setScheduledDate('Próxima Semana')}
+                  className={`py-2 rounded border text-xs font-semibold transition-colors ${scheduledDate === 'Próxima Semana' ? 'bg-[#0052CC] border-[#00A3FF] text-white' : 'border-white/10 text-slate-300 hover:bg-white/5'}`}
+                >
+                  Próxima Semana
+                </button>
+              </div>
+
+              {scheduledDate && (
+                <div className="flex justify-center gap-2 mb-4 animate-in fade-in zoom-in duration-300">
+                  {['09:00', '14:00', '16:00'].map(time => (
+                    <button
+                      key={time}
+                      type="button"
+                      onClick={() => setScheduledTime(time)}
+                      className={`px-3 py-1.5 rounded-full border text-xs font-semibold transition-colors ${scheduledTime === time ? 'bg-emerald-600 border-emerald-400 text-white' : 'border-white/10 text-slate-300 hover:bg-white/5'}`}
+                    >
+                      {time}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href={getWhatsAppMessage()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider glow-emerald transition-all flex items-center justify-center gap-2"
-            >
-              <MessageCircle className="w-4 h-4" />
-              Abrir WhatsApp Imediatamente
-            </a>
+            {intentLevel === 'high' ? (
+              <a
+                href={scheduledDate && scheduledTime 
+                  ? `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(`*PROATIVA - Agendamento de Vistoria*\n\nProtocolo: ${submittedLead.id}\nSolicitante: ${nome}\nEmpresa: ${empresa || 'N/A'}\n\n*Agendamento Sugerido:*\nData: ${scheduledDate}\nHorário: ${scheduledTime}\n\nPor favor, confirmem o agendamento desta visita técnica gratuita.`)}`
+                  : getWhatsAppMessage()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider glow-emerald transition-all flex items-center justify-center gap-2"
+              >
+                <MessageCircle className="w-4 h-4" />
+                {scheduledDate && scheduledTime ? 'Confirmar Visita no WhatsApp' : 'Falar com Vendas Imediatamente'}
+              </a>
+            ) : intentLevel === 'support' ? (
+              <a
+                href={getEmailMailto()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider glow-red transition-all flex items-center justify-center gap-2"
+              >
+                <Mail className="w-4 h-4" />
+                Acionar Equipe de Suporte
+              </a>
+            ) : (
+              <a
+                href={getEmailMailto()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#0052CC] hover:bg-[#004bb8] text-white px-6 py-3 rounded-lg font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+              >
+                <Mail className="w-4 h-4" />
+                Enviar Cópia por E-mail
+              </a>
+            )}
             <button
               onClick={() => {
                 setSubmittedLead(null);
@@ -261,7 +380,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                       Responsável pelo Projeto *
                     </label>
-                    <input
+                    <input maxLength={100}
                       type="text"
                       value={nome}
                       onChange={(e) => setNome(e.target.value)}
@@ -274,7 +393,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                       Empresa / Condomínio *
                     </label>
-                    <input
+                    <input maxLength={100}
                       type="text"
                       value={empresa}
                       onChange={(e) => setEmpresa(e.target.value)}
@@ -290,7 +409,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                       WhatsApp Corporativo *
                     </label>
-                    <input
+                    <input maxLength={100}
                       type="text"
                       value={whatsapp}
                       onChange={handlePhoneChange}
@@ -303,7 +422,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                       E-mail Corporativo *
                     </label>
-                    <input
+                    <input maxLength={100}
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -353,7 +472,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                     Briefing do Projeto / Escopo
                   </label>
-                  <textarea
+                  <textarea maxLength={2000}
                     rows={3}
                     value={detalhes}
                     onChange={(e) => setDetalhes(e.target.value)}
@@ -369,7 +488,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                       Seu Nome *
                     </label>
-                    <input
+                    <input maxLength={100}
                       type="text"
                       value={nome}
                       onChange={(e) => setNome(e.target.value)}
@@ -382,7 +501,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                       Seu WhatsApp *
                     </label>
-                    <input
+                    <input maxLength={100}
                       type="text"
                       value={whatsapp}
                       onChange={handlePhoneChange}
@@ -433,7 +552,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                     Descreva sua necessidade (Opcional)
                   </label>
-                  <textarea
+                  <textarea maxLength={2000}
                     rows={2}
                     value={necessidadeExtra}
                     onChange={(e) => setNecessidadeExtra(e.target.value)}
@@ -446,7 +565,7 @@ export const LeadCaptureForm: React.FC<LeadCaptureFormProps> = ({
 
             <div className="flex items-center justify-between pt-2">
               <label className="inline-flex items-center gap-2 cursor-pointer text-xs text-slate-300 select-none">
-                <input
+                <input maxLength={100}
                   type="checkbox"
                   checked={directWhatsapp}
                   onChange={(e) => setDirectWhatsapp(e.target.checked)}

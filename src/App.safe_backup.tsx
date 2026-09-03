@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
-import { StatsPanel } from './components/StatsPanel';
-import { SLADashboard } from './components/SLADashboard';
 import { LeadCaptureForm } from "./components/LeadCaptureForm";
 import { SectorGrid } from './components/SectorGrid';
 import { SectorDetails } from './components/SectorDetails';
@@ -142,9 +140,6 @@ export default function App() {
           onOpenCalculator={() => setIsCalculatorOpen(true)}
         />
 
-        {/* Dynamic Social Proof Stats Panel */}
-        <StatsPanel />
-
         {/* Detailed Technical Routes and Conversion Copy */}
         <SectorDetails
           sectors={SECTORS_DATA}
@@ -194,9 +189,6 @@ export default function App() {
           onSelectSector={handleSelectSector}
           onTriggerQuote={handleTriggerQuote}
         />
-
-        {/* Public SLA Dashboard Monitoring */}
-        <SLADashboard />
 
         {/* Footer strictly with administrative access and copyright */}
         <Footer

@@ -144,7 +144,7 @@ export const SectorDetails: React.FC<SectorDetailsProps> = ({
             {/* Action Bar */}
             <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-xs text-slate-400 font-medium text-center sm:text-left font-mono">
-                Visita técnica e dimensionamento preliminar com ART registrada.
+                Visita técnica e dimensionamento preliminar com ART, registro no CREA e projetos adequados às normas do Corpo de Bombeiros (SDAI/AVCB).
               </div>
 
               <div className="flex items-center gap-3 w-full sm:w-auto">

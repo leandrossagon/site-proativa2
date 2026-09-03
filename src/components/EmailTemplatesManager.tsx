@@ -38,7 +38,7 @@ export const EmailTemplatesManager: React.FC<EmailTemplatesManagerProps> = ({ le
 
 Recebemos sua solicitação de análise técnica para o escopo de [Setor de Interesse] através do nosso portal.
 
-A PROATIVA Tecnologies atua há mais de 18 anos viabilizando infraestrutura de automação e segurança eletrônica de alta complexidade, sempre com ART registrada e conformidade normativa rigorosa.
+A PROATIVA Tecnologies atua há mais de 18 anos viabilizando infraestrutura de automação e segurança eletrônica de alta complexidade, sempre com ART (CREA), projetos de Alarmes de Incêndio (SDAI) e adequações de conformidade para laudos do Corpo de Bombeiros (AVCB).
 
 Para que nossa engenharia possa dimensionar a solução exata para sua operação, gostaríamos de agendar uma breve call de alinhamento técnico ou uma visita preliminar gratuita (sem compromisso).
 

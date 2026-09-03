@@ -241,7 +241,7 @@ export const ProjectCalculator: React.FC<ProjectCalculatorProps> = ({
                 <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Redução de Falhas</div>
               </div>
               <div className="bg-slate-900/80 p-3 rounded-lg border border-white/10 col-span-2 sm:col-span-1">
-                <div className="text-xl font-black text-emerald-400">100% ART</div>
+                <div className="text-xl font-black text-emerald-400">CREA / ART</div>
                 <div className="text-[10px] font-mono uppercase tracking-wider text-slate-400">Conformidade AVCB</div>
               </div>
             </div>

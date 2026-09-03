@@ -155,7 +155,7 @@ export const SECTORS_DATA: SectorInfo[] = [
     features: [
       'Centrais endereçáveis de altíssima precisão que identificam o sensor exato da ocorrência de fumaça ou calor.',
       'Acionadores manuais, sinalizadores audiovisuais robustos e automação de corte de energia/ar-condicionado em emergências.',
-      'Aprovação simplificada para Habite-se em grandes construtoras e edifícios comerciais com ART recolhida.'
+      'Aprovação simplificada de laudos do Corpo de Bombeiros (AVCB) para Habite-se em grandes construtoras e edifícios comerciais, sempre com emissão de ART e registro no CREA.'
     ],
     specs: [
       { label: 'Topologia do Sistema', value: 'Endereçável Classe A / Laço Fechado' },

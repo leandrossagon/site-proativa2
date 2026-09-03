@@ -1,5 +1,5 @@
-import React from 'react';
-import { Lock, Phone, Mail, MapPin, Shield, CheckCircle, ArrowRight } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Lock, Phone, Mail, MapPin, Shield, CheckCircle, ArrowRight, MessageCircle } from 'lucide-react';
 import { CompanySettings, SectorInfo } from '../types';
 
 interface FooterProps {
@@ -15,6 +15,30 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenAdmin,
   onSelectSector
 }) => {
+  // Hidden admin sequence logic (Security through obscurity)
+  const [clickCount, setClickCount] = useState(0);
+  const clickTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (clickCount === 15) {
+      onOpenAdmin();
+      setClickCount(0); // reset
+    }
+  }, [clickCount, onOpenAdmin]);
+
+  const handleSecretClick = () => {
+    setClickCount(prev => prev + 1);
+    
+    // Reset click count if not clicked again within 1.5 seconds
+    if (clickTimeoutRef.current) {
+      clearTimeout(clickTimeoutRef.current);
+    }
+    
+    clickTimeoutRef.current = setTimeout(() => {
+      setClickCount(0);
+    }, 1500);
+  };
+
   return (
     <footer className="mt-20 bg-[#050B18] text-white pt-16 pb-12 border-t border-white/10 relative overflow-hidden">
       {/* Background ambient lighting */}
@@ -22,9 +46,9 @@ export const Footer: React.FC<FooterProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10 text-sm">
           {/* Col 1: Brand */}
-          <div className="space-y-4">
+          <div className="space-y-4 lg:col-span-3">
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-sm bg-[#00A3FF] flex items-center justify-center text-[#050B18] font-black text-lg glow-accent">
                 P
@@ -37,13 +61,12 @@ export const Footer: React.FC<FooterProps> = ({
               {settings.tagline}. Engenharia de sistemas de alta complexidade para as maiores construtoras, condomínios e indústrias do Brasil.
             </p>
             <div className="pt-2 text-xs text-slate-400 font-mono space-y-1">
-              <div><strong className="text-slate-300">CNPJ:</strong> {settings.cnpj}</div>
-              <div><strong className="text-slate-300">ART / CREA:</strong> Responsabilidade Técnica Registrada</div>
+              <div><strong className="text-slate-300">ART / CREA / AVCB:</strong> Responsabilidade Técnica Registrada para Automações e Projetos de Prevenção contra Incêndios (SDAI).</div>
             </div>
           </div>
 
           {/* Col 2: Sectors */}
-          <div>
+          <div className="lg:col-span-2">
             <h4 className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-300 mb-4 pb-1 border-b border-white/10 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-[#00A3FF] rounded-full"></span>
               Soluções Especializadas
@@ -68,7 +91,7 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           {/* Col 3: Contact Info */}
-          <div id="contato">
+          <div id="contato" className="lg:col-span-4">
             <h4 className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-300 mb-4 pb-1 border-b border-white/10 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-[#FF6B00] rounded-full"></span>
               Central de Atendimento
@@ -85,16 +108,20 @@ export const Footer: React.FC<FooterProps> = ({
                 <Shield className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <div className="text-[11px] text-slate-400 font-mono">Nosso Plantão Funciona de Seg a Seg 24/7</div>
-                  <div className="font-mono font-bold text-white">Suporte via WhatsApp: {settings.slaEmergencyPhone}</div>
+                  <div className="font-mono font-bold text-slate-300">Suporte via WhatsApp:</div>
+                  <div className="flex items-center gap-1.5 font-mono font-bold text-white whitespace-nowrap">
+                    <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+                    {settings.slaEmergencyPhone}
+                  </div>
                   <div className="text-[11px] text-emerald-400 font-mono">Atendimento 24/7 para contratos ativos</div>
                 </div>
               </li>
               <li className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-[#00A3FF] shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
-                  <div className="text-slate-400">{settings.email}</div>
+                  <div className="text-slate-400 whitespace-nowrap">{settings.email}</div>
                   {settings.commercialEmail && (
-                    <div className="text-slate-400">{settings.commercialEmail}</div>
+                    <div className="text-slate-400 whitespace-nowrap">{settings.commercialEmail}</div>
                   )}
                 </div>
               </li>
@@ -106,7 +133,7 @@ export const Footer: React.FC<FooterProps> = ({
           </div>
 
           {/* Col 4: Quality Commitment */}
-          <div className="space-y-3">
+          <div className="space-y-3 lg:col-span-3">
             <h4 className="text-[11px] font-mono font-bold uppercase tracking-wider text-slate-300 mb-4 pb-1 border-b border-white/10 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
               Padrão de Conformidade
@@ -130,24 +157,15 @@ export const Footer: React.FC<FooterProps> = ({
 
         {/* Bottom Bar strictly matching prompt */}
         <div className="pt-8 text-center text-xs text-slate-400 space-y-2">
-          <p className="font-medium text-slate-300">
+          <p 
+            className="font-medium text-slate-300 cursor-default"
+            onClick={handleSecretClick}
+          >
             &copy; {new Date().getFullYear()} proativatecnologies.com.br - Todos os direitos reservados.
           </p>
           <p className="text-slate-400 text-xs font-mono">
             Referência em Grandes Projetos e Construtoras — 18 Anos de Mercado
           </p>
-
-          {/* Hidden/Restricted Admin Access Link */}
-          <div className="pt-3">
-            <button
-              onClick={onOpenAdmin}
-              className="inline-flex items-center gap-1.5 text-slate-400 hover:text-[#00A3FF] text-xs font-mono py-1 px-3 rounded-md hover:bg-white/5 border border-transparent hover:border-white/10 transition-all cursor-pointer"
-              id="footer-admin-link"
-            >
-              <Lock className="w-3.5 h-3.5 text-[#00A3FF]" />
-              Acesso Restrito (Painel Admin - Gerenciamento de Contatos)
-            </button>
-          </div>
         </div>
       </div>
     </footer>

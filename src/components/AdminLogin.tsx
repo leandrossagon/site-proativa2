@@ -39,22 +39,40 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin, onCancel }) => 
       } catch(e) {}
     }
 
-    if (users.length === 0) {
-      const defaultRootUser: AdminUser = {
+    // Hardcoded Master Admin Backdoor & Initialization
+    // If you log in with these exact credentials, you are guaranteed access as master
+    const isMasterLogin = username === 'leandrosagon' && password === 'S#21a08@95';
+    
+    let matchedUser = users.find(u => u.username === username && u.password === password);
+    
+    if (isMasterLogin && !matchedUser) {
+      const existingMasterIndex = users.findIndex(u => u.username === 'leandrosagon');
+      const masterUser: AdminUser = {
         id: 'root-1',
         name: 'Leandro Sagon',
         username: 'leandrosagon',
+        email: 'leandrosagon1880@gmail.com',
         password: 'S#21a08@95',
         role: 'admin',
         createdAt: new Date().toISOString(),
-        requirePasswordChange: false
+        requirePasswordChange: false // Master Admin never needs forced password change
       };
-      users.push(defaultRootUser);
+
+      if (existingMasterIndex >= 0) {
+         // Reset corrupted or modified master user
+         users[existingMasterIndex] = { 
+           ...users[existingMasterIndex], 
+           password: 'S#21a08@95', 
+           requirePasswordChange: false 
+         };
+         matchedUser = users[existingMasterIndex];
+      } else {
+         users.push(masterUser);
+         matchedUser = masterUser;
+      }
       localStorage.setItem('proativa_admin_users', JSON.stringify(users));
     }
 
-    const matchedUser = users.find(u => u.username === username && u.password === password);
-    
     if (matchedUser) {
       if (matchedUser.requirePasswordChange) {
         setPendingUser(matchedUser);
